@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awais Tariq — Senior Flutter Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#070910;--bg2:#0d0f18;--bg3:#111420;--bg4:#161928;
+--c:#00f0ff;--c2:#7b5ea7;--c3:#00e5a0;--c4:#ff6b6b;
+--t:#eef0f8;--t2:#8892aa;--t3:#4a5268;
+--bd:rgba(255,255,255,0.06);--bd2:rgba(0,240,255,0.15);
+--mono:'Fira Code',monospace;--sans:'Space Grotesk',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
+canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.35}
+.wrap{position:relative;z-index:1}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:rgba(7,9,16,0.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd)}
+.nlogo{font-family:var(--mono);font-size:13px;color:var(--c);letter-spacing:.04em}
+.nlinks{display:flex;gap:28px;list-style:none}
+.nlinks a{color:var(--t2);text-decoration:none;font-size:12px;font-family:var(--mono);letter-spacing:.06em;transition:color .2s}
+.nlinks a:hover{color:var(--c)}
+.nhire{font-family:var(--mono);font-size:11px;padding:7px 18px;border:1px solid var(--c);border-radius:3px;color:var(--c);text-decoration:none;transition:all .2s}
+.nhire:hover{background:rgba(0,240,255,0.08)}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 400px;gap:0;align-items:center;padding:100px 40px 60px}
+.hero-left{padding-right:60px}
+.h-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(0,229,160,0.3);background:rgba(0,229,160,0.06);padding:5px 14px;border-radius:100px;font-family:var(--mono);font-size:11px;color:var(--c3);margin-bottom:28px}
+.h-pill-dot{width:6px;height:6px;background:var(--c3);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(40px,5.5vw,76px);font-weight:700;line-height:1.0;letter-spacing:-0.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--c),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h-role{font-family:var(--mono);font-size:13px;color:var(--t2);margin-bottom:22px;display:flex;align-items:center;gap:8px}
+.h-role span{color:var(--c)}
+.h-desc{font-size:15px;color:var(--t2);line-height:1.85;margin-bottom:32px;max-width:500px}
+.h-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+.btn-a{background:var(--c);color:#000;font-family:var(--sans);font-weight:600;font-size:14px;padding:12px 28px;border:none;border-radius:5px;text-decoration:none;cursor:pointer;transition:all .2s;display:inline-block}
+.btn-a:hover{opacity:.85;transform:translateY(-2px)}
+.btn-b{background:transparent;color:var(--t);font-family:var(--sans);font-weight:500;font-size:14px;padding:12px 28px;border:1px solid rgba(255,255,255,0.15);border-radius:5px;text-decoration:none;cursor:pointer;transition:all .2s;display:inline-block}
+.btn-b:hover{border-color:var(--c);color:var(--c)}
+.h-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:8px;overflow:hidden}
+.h-stat{background:var(--bg2);padding:16px 10px;text-align:center}
+.h-stat .sn{font-size:28px;font-weight:700;color:var(--t);line-height:1}
+.h-stat .sn span{color:var(--c);font-size:20px}
+.h-stat .sl{font-size:10px;color:var(--t3);margin-top:4px;font-family:var(--mono)}
+
+/* CODE CARD */
+.code-card{background:var(--bg3);border:1px solid var(--bd);border-radius:12px;overflow:hidden;font-family:var(--mono)}
+.cc-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;background:var(--bg4);border-bottom:1px solid var(--bd)}
+.cc-dot{width:10px;height:10px;border-radius:50%}
+.cc-title{font-size:11px;color:var(--t3);margin-left:6px}
+.cc-body{padding:18px 20px;font-size:12px;line-height:1.9}
+.cc-comment{color:#4a5268}.cc-key{color:#7b5ea7}.cc-str{color:#00f0ff}.cc-num{color:#00e5a0}.cc-fn{color:#ff9f43}.cc-punc{color:var(--t2)}
+.cc-line{display:block}
+
+/* TECH STRIP */
+.tech-strip{padding:20px 40px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);background:var(--bg2);overflow:hidden}
+.tech-scroll{display:flex;gap:28px;animation:scroll-x 28s linear infinite;width:max-content}
+@keyframes scroll-x{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tech-chip{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--t3);white-space:nowrap}
+.tech-chip-dot{width:4px;height:4px;border-radius:50%;background:var(--c);flex-shrink:0}
+
+/* SECTIONS */
+.sec{padding:90px 40px}.sec-alt{background:var(--bg2)}
+.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-bottom:60px}
+.sec-label{font-family:var(--mono);font-size:11px;color:var(--c);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.sec-title{font-size:clamp(24px,3.2vw,38px);font-weight:700;line-height:1.1;letter-spacing:-0.02em}
+.sec-desc{font-size:14px;color:var(--t2);line-height:1.85;padding-top:6px}
+
+/* APPS */
+.apps-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.app-card{background:var(--bg3);border:1px solid var(--bd);border-radius:12px;overflow:hidden;transition:transform .25s,border-color .25s}
+.app-card:hover{transform:translateY(-4px);border-color:var(--bd2)}
+.app-top{padding:20px 20px 16px;border-bottom:1px solid var(--bd)}
+.app-row1{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.app-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.app-stores{display:flex;gap:5px;flex-wrap:wrap}
+.slink{display:flex;align-items:center;gap:4px;padding:3px 8px;border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--t3);text-decoration:none;font-family:var(--mono);font-size:10px;transition:all .2s}
+.slink:hover{border-color:var(--c);color:var(--c)}
+.slink svg{width:9px;height:9px}
+.app-name{font-size:16px;font-weight:600;margin-bottom:4px}
+.app-tag{font-size:12px;color:var(--t2);line-height:1.6}
+.app-bot{padding:16px 20px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.chip{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px}
+.chip-c{color:var(--c);border:1px solid rgba(0,240,255,0.2);background:rgba(0,240,255,0.05)}
+.chip-p{color:#b39ddb;border:1px solid rgba(179,157,219,0.2);background:rgba(179,157,219,0.05)}
+.chip-g{color:var(--c3);border:1px solid rgba(0,229,160,0.2);background:rgba(0,229,160,0.05)}
+.chip-o{color:#ffa94d;border:1px solid rgba(255,169,77,0.2);background:rgba(255,169,77,0.05)}
+.app-feats{list-style:none;display:flex;flex-direction:column;gap:4px}
+.app-feats li{font-size:12px;color:var(--t2);display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.app-feats li::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--c);flex-shrink:0;margin-top:5px}
+.ai-tag{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:2px 8px;border-radius:3px;background:rgba(123,94,167,0.15);border:1px solid rgba(123,94,167,0.3);color:#b39ddb;font-family:var(--mono);font-size:10px}
+
+/* SKILLS */
+.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.skill-block{background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:22px}
+.sb-title{font-family:var(--mono);font-size:10px;color:var(--c);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sb-title::after{content:'';flex:1;height:1px;background:var(--bd)}
+.skill-bars{display:flex;flex-direction:column;gap:11px}
+.skill-row{display:flex;flex-direction:column;gap:5px}
+.skill-info{display:flex;justify-content:space-between;align-items:center}
+.skill-name{font-size:13px;color:var(--t)}
+.skill-pct{font-family:var(--mono);font-size:10px;color:var(--t3)}
+.skill-bar{height:2px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden}
+.skill-fill{height:100%;border-radius:2px;background:var(--c);width:0;transition:width 1.3s cubic-bezier(.25,.46,.45,.94)}
+.skill-fill.g{background:var(--c3)}.skill-fill.p{background:var(--c2)}.skill-fill.o{background:#ffa94d}
+
+/* EXPERIENCE */
+.exp-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.exp-timeline{display:flex;flex-direction:column;position:relative;padding-left:22px}
+.exp-timeline::before{content:'';position:absolute;left:4px;top:14px;bottom:14px;width:1px;background:var(--bd)}
+.exp-item{position:relative;padding-bottom:32px}
+.exp-item:last-child{padding-bottom:0}
+.exp-dot{position:absolute;left:-19px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--c);border:2px solid var(--bg)}
+.exp-period{font-family:var(--mono);font-size:10px;color:var(--t3);margin-bottom:4px}
+.exp-role{font-size:15px;font-weight:600;margin-bottom:2px}
+.exp-company{font-size:12px;color:var(--c);margin-bottom:10px;font-family:var(--mono)}
+.exp-pts{list-style:none;display:flex;flex-direction:column;gap:4px}
+.exp-pts li{font-size:12px;color:var(--t2);display:flex;gap:7px;line-height:1.6}
+.exp-pts li::before{content:'→';color:var(--c);flex-shrink:0;font-family:var(--mono);font-size:10px;margin-top:2px}
+
+/* UPWORK PANEL */
+.upwork-panel{background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:24px;position:relative;overflow:hidden}
+.upwork-panel::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(0,229,160,.07),transparent 70%);pointer-events:none}
+.up-score-row{display:flex;align-items:flex-end;gap:8px;margin-bottom:4px}
+.up-score{font-size:56px;font-weight:700;color:var(--c3);line-height:1}
+.up-pct{font-size:16px;color:var(--c3);margin-bottom:8px}
+.up-label{font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.up-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border:1px solid rgba(0,229,160,.25);background:rgba(0,229,160,.07);border-radius:100px;font-family:var(--mono);font-size:11px;color:var(--c3);margin-bottom:20px}
+.up-rows{display:flex;flex-direction:column;border-top:1px solid var(--bd)}
+.up-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.up-row:last-child{border-bottom:none}
+.up-row .k{color:var(--t2)}.up-row .v{font-weight:600;color:var(--t)}.up-row .v.g{color:var(--c3)}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.avail-pill{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border:1px solid rgba(0,229,160,.25);background:rgba(0,229,160,.07);border-radius:100px;font-family:var(--mono);font-size:11px;color:var(--c3);margin-bottom:20px}
+.avail-pill::before{content:'';width:6px;height:6px;background:var(--c3);border-radius:50%;animation:blink 2s infinite}
+.contact-left p{font-size:14px;color:var(--t2);line-height:1.85;margin-bottom:28px}
+.c-links{display:flex;flex-direction:column;gap:8px}
+.c-link{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:9px;text-decoration:none;color:var(--t);transition:all .2s}
+.c-link:hover{border-color:var(--bd2);transform:translateX(4px)}
+.c-link-ico{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.c-link-ico svg{width:15px;height:15px}
+.c-link-info .lbl{font-size:10px;color:var(--t3);font-family:var(--mono);display:block}
+.c-link-info .val{font-size:13px;font-weight:500}
+.c-link-arr{margin-left:auto;color:var(--t3);font-size:13px;transition:color .2s}
+.c-link:hover .c-link-arr{color:var(--c)}
+
+/* GITHUB DUAL */
+.gh-dual{display:flex;flex-direction:column;gap:8px}
+.gh-card{background:var(--bg3);border:1px solid var(--bd);border-radius:9px;padding:14px 16px;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--t);transition:all .2s}
+.gh-card:hover{border-color:rgba(255,255,255,0.15);transform:translateX(4px)}
+.gh-card-ico{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gh-card-ico svg{width:15px;height:15px}
+.gh-card-info .lbl{font-size:10px;color:var(--t3);font-family:var(--mono);display:block}
+.gh-card-info .val{font-size:13px;font-weight:500}
+.gh-note{font-size:11px;color:var(--t3);font-family:var(--mono);margin-top:2px;display:block}
+
+/* SERVICES */
+.svc-grid{display:flex;flex-direction:column;gap:10px}
+.svc-card{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg4);border-radius:8px;border:1px solid var(--bd)}
+.svc-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.svc-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.svc-desc{font-size:11px;color:var(--t2);line-height:1.6}
+
+/* FOOTER */
+footer{padding:28px 40px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.f-logo{font-family:var(--mono);font-size:11px;color:var(--t3)}
+.f-right{display:flex;align-items:center;gap:20px}
+.f-right a{font-family:var(--mono);font-size:11px;color:var(--t3);text-decoration:none;transition:color .2s}
+.f-right a:hover{color:var(--c)}
+
+/* ANIMATE */
+.anim{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.anim.in{opacity:1;transform:translateY(0)}
+.anim-d1{transition-delay:.1s}.anim-d2{transition-delay:.2s}.anim-d3{transition-delay:.3s}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media(max-width:900px){
+  nav{padding:12px 20px}
+  .nlinks{display:none}
+  .hero{grid-template-columns:1fr;padding:90px 20px 48px;min-height:auto;gap:40px}
+  .hero-left{padding-right:0}
+  .hero-right{order:-1}
+  .sec{padding:64px 20px}
+  .sec-head{grid-template-columns:1fr;gap:16px;margin-bottom:40px}
+  .apps-grid{grid-template-columns:1fr}
+  .skills-layout{grid-template-columns:1fr}
+  .exp-layout{grid-template-columns:1fr;gap:32px}
+  .contact-layout{grid-template-columns:1fr;gap:32px}
+  footer{padding:24px 20px;flex-direction:column;gap:12px;text-align:center}
+  .f-right{flex-wrap:wrap;justify-content:center}
+}
+@media(max-width:480px){
+  .h-stats{grid-template-columns:repeat(2,1fr)}
+  .h-stat .sn{font-size:24px}
+  nav{padding:12px 16px}
+  .sec{padding:48px 16px}
+  .nhire{display:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="wrap">
+
+<nav>
+  <div class="nlogo">awais.chaudhry</div>
+  <ul class="nlinks">
+    <li><a href="#apps">apps</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <a href="#contact" class="nhire">hire me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="h-pill"><span class="h-pill-dot"></span>Open to freelance &amp; long-term projects</div>
+    <h1>Senior<br><em>Flutter</em><br>Engineer</h1>
+    <div class="h-role"><span>//</span> Mobile · AI · Node.js · 5+ yrs</div>
+    <p class="h-desc">I ship production Flutter apps that real people actually use — AI-powered learning platforms, GPS hunting trackers, offline-first tools and full-scale HR systems. Cross-platform, clean architecture, fast delivery.</p>
+    <div class="h-btns">
+      <a href="#apps" class="btn-a">See my work</a>
+      <a href="#contact" class="btn-b">Let's talk</a>
+    </div>
+    <div class="h-stats">
+      <div class="h-stat"><div class="sn">5<span>+</span></div><div class="sl">yrs exp</div></div>
+      <div class="h-stat"><div class="sn">8<span>+</span></div><div class="sl">live apps</div></div>
+      <div class="h-stat"><div class="sn">100<span>%</span></div><div class="sl">upwork JSS</div></div>
+      <div class="h-stat"><div class="sn">3<span>+</span></div><div class="sl">AI apps</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="code-card">
+      <div class="cc-bar">
+        <div class="cc-dot" style="background:#ff5f57"></div>
+        <div class="cc-dot" style="background:#ffbd2e"></div>
+        <div class="cc-dot" style="background:#28ca41"></div>
+        <span class="cc-title">awais_chaudhry.dart</span>
+      </div>
+      <div class="cc-body">
+        <span class="cc-line"><span class="cc-key">class</span> <span class="cc-fn">AwaisChaudhry</span> <span class="cc-punc">{</span></span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-key">final</span> role <span class="cc-punc">=</span> <span class="cc-str">'Senior Flutter Engineer'</span><span class="cc-punc">;</span></span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-key">final</span> location <span class="cc-punc">=</span> <span class="cc-str">'Lahore, Pakistan 🇵🇰'</span><span class="cc-punc">;</span></span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-key">final</span> experience <span class="cc-punc">=</span> <span class="cc-num">5</span><span class="cc-punc">;</span></span>
+        <span class="cc-line">&nbsp;</span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-key">final</span> stack <span class="cc-punc">= [</span></span>
+        <span class="cc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cc-str">'Flutter'</span><span class="cc-punc">,</span> <span class="cc-str">'Dart'</span><span class="cc-punc">,</span> <span class="cc-str">'Node.js'</span><span class="cc-punc">,</span></span>
+        <span class="cc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cc-str">'Firebase'</span><span class="cc-punc">,</span> <span class="cc-str">'MongoDB'</span><span class="cc-punc">,</span></span>
+        <span class="cc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cc-str">'Redis'</span><span class="cc-punc">,</span> <span class="cc-str">'Socket.io'</span><span class="cc-punc">,</span></span>
+        <span class="cc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cc-str">'AI / LLM APIs'</span></span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-punc">];</span></span>
+        <span class="cc-line">&nbsp;</span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-key">final</span> upwork <span class="cc-punc">= {</span></span>
+        <span class="cc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cc-str">'jss'</span><span class="cc-punc">:</span> <span class="cc-str">'100%'</span><span class="cc-punc">,</span></span>
+        <span class="cc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cc-str">'badge'</span><span class="cc-punc">:</span> <span class="cc-str">'Top Rated'</span></span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-punc">};</span></span>
+        <span class="cc-line">&nbsp;</span>
+        <span class="cc-line">&nbsp;&nbsp;<span class="cc-key">bool</span> get available <span class="cc-punc">=&gt;</span> <span class="cc-num">true</span><span class="cc-punc">;</span></span>
+        <span class="cc-line"><span class="cc-punc">}</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STRIP -->
+<div class="tech-strip">
+  <div class="tech-scroll" id="tscroll"></div>
+</div>
+
+<!-- APPS -->
+<section class="sec" id="apps">
+  <div class="sec-head anim">
+    <div><div class="sec-label">// featured work</div><h2 class="sec-title">Apps I've Built &amp; Shipped</h2></div>
+    <p class="sec-desc">8+ production apps live on the App Store and Play Store — AI-powered education, B2B pharma ordering, GPS hardware tracking, family finance and full HR systems. Every one solving a real problem for real users.</p>
+  </div>
+  <div class="apps-grid">
+
+    <div class="app-card anim">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(0,240,255,.08)">⏱</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.whitebox.ams" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+            <a href="https://apps.apple.com/pk/app/workpulse/id6749375665" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-2.15 3.81c.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>iOS</a>
+          </div>
+        </div>
+        <div class="app-name">WorkPulse</div>
+        <div class="app-tag">Full-scale workforce management — attendance, leave, HR ops, mobile + web + super-admin panel.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-c">Flutter</span><span class="chip chip-c">Node.js</span><span class="chip chip-o">Socket.io</span><span class="chip chip-g">Redis</span><span class="chip chip-p">MongoDB</span></div>
+        <ul class="app-feats">
+          <li>Real-time notifications via WebSockets + Redis, 40% faster response</li>
+          <li>Reduced manual tracking time by 70% across organizations</li>
+          <li>Mobile + Web admin + Super admin — Flutter &amp; React</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="app-card anim anim-d1">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(123,94,167,.1)">📄</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.crewdog.cvlab" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+          </div>
+        </div>
+        <div class="app-name">CV Lab</div>
+        <div class="app-tag">AI-powered CV optimization &amp; semantic talent matching for candidates and recruiters.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-p">Flutter</span><span class="chip chip-p">AI / LLM</span><span class="chip chip-c">REST APIs</span></div>
+        <ul class="app-feats">
+          <li>AI-assisted CV optimization tailored to job descriptions</li>
+          <li>Semantic job search for candidates &amp; talent search for recruiters</li>
+        </ul>
+        <div class="ai-tag">✦ AI Integrated</div>
+      </div>
+    </div>
+
+    <div class="app-card anim anim-d2">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(0,229,160,.08)">🌎</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.inditemedia.aprenderingles" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+            <a href="https://apps.apple.com/pk/app/aprender-ingl%C3%A9s-in-30-days/id6741247763" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-2.15 3.81c.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>iOS</a>
+          </div>
+        </div>
+        <div class="app-name">Aprende Inglés</div>
+        <div class="app-tag">Structured English learning for Spanish speakers — lessons, audio, quizzes, offline access.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-g">Flutter</span><span class="chip chip-o">Firebase</span><span class="chip chip-c">Dart Frog</span><span class="chip chip-p">AI</span></div>
+        <ul class="app-feats">
+          <li>Structured Beginner → Intermediate modules with audio pronunciation</li>
+          <li>Interactive quizzes, progress tracking, full offline access</li>
+        </ul>
+        <div class="ai-tag">✦ AI Integrated</div>
+      </div>
+    </div>
+
+    <div class="app-card anim anim-d3">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(0,240,255,.06)">🩺</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.exploretowin.medicalspanish" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+          </div>
+        </div>
+        <div class="app-name">Medical Spanish</div>
+        <div class="app-tag">Specialized Spanish for doctors &amp; nurses — roleplay, pronunciation checking, emergency phrases.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-c">Flutter</span><span class="chip chip-o">Firebase</span><span class="chip chip-c">Dart Frog</span><span class="chip chip-p">AI</span></div>
+        <ul class="app-feats">
+          <li>AI pronunciation checker + roleplay patient conversations</li>
+          <li>Emergency quick-access phrases, flashcards, fill-in-the-blank</li>
+        </ul>
+        <div class="ai-tag">✦ AI Integrated</div>
+      </div>
+    </div>
+
+    <div class="app-card anim">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(0,229,160,.08)">📍</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.wb.hyde_finder" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+          </div>
+        </div>
+        <div class="app-name">Hyde Finder</div>
+        <div class="app-tag">World's first GPS-enabled arrow collar hunting companion — BLE &amp; LoRa, works without cell service.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-g">Flutter</span><span class="chip chip-o">Mapbox</span><span class="chip chip-o">BLE/LoRa</span><span class="chip chip-c">REST API</span></div>
+        <ul class="app-feats">
+          <li>Live GPS + temperature + movement data from hardware capsule</li>
+          <li>Community hunt feed + integrated e-commerce store</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="app-card anim anim-d1">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(123,94,167,.1)">🔏</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.whitebox.watermark.watermark" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+            <a href="https://apps.apple.com/pk/app/watermark-pro/id6757298099" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-2.15 3.81c.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>iOS</a>
+          </div>
+        </div>
+        <div class="app-name">Watermark Pro</div>
+        <div class="app-tag">100% offline watermarking, branded PDF creation &amp; transparent signature extraction. Zero cloud.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-p">Flutter</span><span class="chip chip-o">Dart 3.8+</span><span class="chip chip-g">Offline-first</span></div>
+        <ul class="app-feats">
+          <li>Text, logo, or signature watermarks on images</li>
+          <li>Extract clean transparent signatures — fully on-device, no internet</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="app-card anim anim-d2">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(0,229,160,.08)">💰</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=net.whiteboxtech.expense_tracker" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+            <a href="https://apps.apple.com/us/app/ourexpenses/id6758611147" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-2.15 3.81c.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>iOS</a>
+          </div>
+        </div>
+        <div class="app-name">Our Expenses</div>
+        <div class="app-tag">Family expense tracker — shared finances, budgeting and spending insights for households.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-g">Flutter</span><span class="chip chip-o">Firebase</span></div>
+        <ul class="app-feats">
+          <li>Shared family expense logging and categorization</li>
+          <li>Monthly spending insights — Android &amp; iOS</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="app-card anim anim-d3">
+      <div class="app-top">
+        <div class="app-row1">
+          <div class="app-ico" style="background:rgba(0,240,255,.06)">💊</div>
+          <div class="app-stores">
+            <a href="https://play.google.com/store/apps/details?id=com.anmol.AnmolMarket" class="slink" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.78l14 8.5c.6.36.6 1.2 0 1.56l-14 8.5c-.69.52-1.7.05-1.7-.78z"/></svg>Android</a>
+          </div>
+        </div>
+        <div class="app-name">Anmol Marketing</div>
+        <div class="app-tag">B2B pharma ordering — pharmacies order medicines directly from multiple companies in one place.</div>
+      </div>
+      <div class="app-bot">
+        <div class="chips"><span class="chip chip-c">Flutter</span><span class="chip chip-o">B2B</span><span class="chip chip-c">REST API</span></div>
+        <ul class="app-feats">
+          <li>Multi-company medicine catalog with direct pharmacy ordering</li>
+          <li>Order tracking, history and management</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="sec sec-alt" id="skills">
+  <div class="sec-head anim">
+    <div><div class="sec-label">// technical expertise</div><h2 class="sec-title">What I Build With</h2></div>
+    <p class="sec-desc">My core stack — battle-tested across 8+ production apps. From state management to backend infrastructure, real-time systems and AI integrations. Everything to take an idea from Figma to the App Store.</p>
+  </div>
+  <div class="skills-layout">
+    <div class="skill-block anim">
+      <div class="sb-title">Mobile / Flutter</div>
+      <div class="skill-bars">
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Flutter / Dart</span><span class="skill-pct">98%</span></div><div class="skill-bar"><div class="skill-fill" data-w="98"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Riverpod / BLoC / GetX</span><span class="skill-pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Offline-first architecture</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Multi-flavor iOS &amp; Android</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Store deployment (both)</span><span class="skill-pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block anim anim-d1">
+      <div class="sb-title">Backend</div>
+      <div class="skill-bars">
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Node.js / Express</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill p" data-w="88"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">MongoDB / Mongoose</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill p" data-w="85"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Redis / BullMQ</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill p" data-w="80"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">WebSockets / Socket.io</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill p" data-w="85"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Dart Frog backend</span><span class="skill-pct">78%</span></div><div class="skill-bar"><div class="skill-fill p" data-w="78"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block anim anim-d2">
+      <div class="sb-title">Firebase &amp; Cloud</div>
+      <div class="skill-bars">
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Firebase Auth / Firestore</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-fill o" data-w="92"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">FCM push notifications</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill o" data-w="90"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">CI/CD — GitHub Actions</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-fill o" data-w="82"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">OCI Object Storage</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill o" data-w="75"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block anim anim-d3">
+      <div class="sb-title">AI &amp; Integrations</div>
+      <div class="skill-bars">
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">LLM API integration</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill g" data-w="85"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">Mapbox SDK</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill g" data-w="80"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">BLE / LoRa hardware</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill g" data-w="75"></div></div></div>
+        <div class="skill-row"><div class="skill-info"><span class="skill-name">REST / GraphQL APIs</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-fill g" data-w="92"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="sec" id="experience">
+  <div class="sec-head anim">
+    <div><div class="sec-label">// work history</div><h2 class="sec-title">Experience</h2></div>
+    <p class="sec-desc">From solo freelancing to leading a cross-functional team — building apps that ship on time, scale well, and keep clients coming back for more.</p>
+  </div>
+  <div class="exp-layout">
+    <div class="exp-timeline anim">
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-period">Feb 2022 – Present</div>
+        <div class="exp-role">Flutter Developer Team Lead</div>
+        <div class="exp-company">WhiteBox</div>
+        <ul class="exp-pts">
+          <li>Architected WorkPulse workforce platform — full mobile, web &amp; backend delivery</li>
+          <li>Reduced operational workload by 70% through smart automation and real-time infrastructure</li>
+          <li>Implemented real-time notification system via WebSockets + Redis</li>
+          <li>Leading cross-functional product development across UI/UX, Backend, and Mobile teams</li>
+          <li>Currently driving eSIM Marketplace — team of 4, end-to-end product ownership</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-dot" style="background:var(--c2)"></div>
+        <div class="exp-period">Apr 2023 – Present</div>
+        <div class="exp-role">Flutter Developer — Top Rated</div>
+        <div class="exp-company">Upwork · Freelance</div>
+        <ul class="exp-pts">
+          <li>Delivered projects for international clients — healthcare, e-commerce, SaaS</li>
+          <li>Maintained 100% Job Success Score and Top Rated badge throughout</li>
+          <li>Specialized in cross-platform Flutter with Firebase and REST integrations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="upwork-panel anim anim-d2">
+      <div class="up-score-row"><div class="up-score">100</div><div class="up-pct">%</div></div>
+      <div class="up-label">Upwork Job Success Score</div>
+      <div class="up-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Top Rated</div>
+      <div class="up-rows">
+        <div class="up-row"><span class="k">Experience</span><span class="v">5+ years</span></div>
+        <div class="up-row"><span class="k">Specialization</span><span class="v">Flutter / Dart</span></div>
+        <div class="up-row"><span class="k">AI-integrated apps</span><span class="v">3 live</span></div>
+        <div class="up-row"><span class="k">Apps on stores</span><span class="v">8+ shipped</span></div>
+        <div class="up-row"><span class="k">Current role</span><span class="v">Team Lead</span></div>
+        <div class="up-row"><span class="k">Availability</span><span class="v g">Open to projects</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec sec-alt" id="contact">
+  <div class="sec-head anim">
+    <div><div class="sec-label">// get in touch</div><h2 class="sec-title">Let's Build Together</h2></div>
+    <p class="sec-desc">Have a Flutter app in mind? Need an AI-integrated mobile product, a full-stack MVP, or a reliable senior dev for your team? Let's talk — I respond fast.</p>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-left anim">
+      <div class="avail-pill">Available for new projects</div>
+      <p>Whether it's a long-term product build, a short freelance sprint, or an AI-powered mobile app — I deliver clean code, fast. Based in Lahore, Pakistan. Working with clients globally.</p>
+      <div class="c-links">
+        <a href="https://wa.me/923324449533" class="c-link" target="_blank">
+          <div class="c-link-ico" style="background:rgba(37,211,102,.1)"><svg viewBox="0 0 24 24" fill="#25d166"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+          <div class="c-link-info"><span class="lbl">WhatsApp · +92 332 4449533</span><span class="val">Message me directly</span></div>
+          <span class="c-link-arr">→</span>
+        </a>
+        <a href="mailto:chaudhryawais.533@gmail.com" class="c-link" target="_blank">
+          <div class="c-link-ico" style="background:rgba(0,240,255,.07)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--c)" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="c-link-info"><span class="lbl">Email</span><span class="val">chaudhryawais.533@gmail.com</span></div>
+          <span class="c-link-arr">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/awais-chaudhry533/" class="c-link" target="_blank">
+          <div class="c-link-ico" style="background:rgba(10,102,194,.12)"><svg viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+          <div class="c-link-info"><span class="lbl">LinkedIn</span><span class="val">linkedin.com/in/awais-chaudhry533</span></div>
+          <span class="c-link-arr">→</span>
+        </a>
+        <a href="https://www.upwork.com/freelancers/~014e4b35ce44bd1283" class="c-link" target="_blank">
+          <div class="c-link-ico" style="background:rgba(20,166,75,.1)"><svg viewBox="0 0 24 24" fill="#14a64b"><path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.546-1.405 0-2.543-1.14-2.543-2.546V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.439-5.439-5.439z"/></svg></div>
+          <div class="c-link-info"><span class="lbl">Upwork · Top Rated · 100% JSS</span><span class="val">Hire me on Upwork</span></div>
+          <span class="c-link-arr">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="anim anim-d2" style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:22px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px">GitHub profiles</div>
+        <div class="gh-dual">
+          <a href="https://github.com/awaisCh07" class="gh-card" target="_blank">
+            <div class="gh-card-ico"><svg viewBox="0 0 24 24" fill="var(--t)"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></div>
+            <div class="gh-card-info">
+              <span class="lbl">Primary · All contributions</span>
+              <span class="val">github.com/awaisCh07</span>
+              <span class="gh-note">Historical + recent work</span>
+            </div>
+            <span style="color:var(--t3);font-size:13px;margin-left:auto">→</span>
+          </a>
+          <a href="https://github.com/chaudhryawais533" class="gh-card" target="_blank">
+            <div class="gh-card-ico"><svg viewBox="0 0 24 24" fill="var(--t)"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></div>
+            <div class="gh-card-info">
+              <span class="lbl">Secondary · 2026 activity</span>
+              <span class="val">github.com/chaudhryawais533</span>
+              <span class="gh-note">Current year contributions</span>
+            </div>
+            <span style="color:var(--t3);font-size:13px;margin-left:auto">→</span>
+          </a>
+        </div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--bd);border-radius:12px;padding:22px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">What I can build for you</div>
+        <div class="svc-grid">
+          <div class="svc-card"><div class="svc-ico" style="background:rgba(0,240,255,.08)">📱</div><div><div class="svc-title">Cross-platform Flutter apps</div><div class="svc-desc">Android + iOS from one codebase. Production-ready, store-ready.</div></div></div>
+          <div class="svc-card"><div class="svc-ico" style="background:rgba(123,94,167,.1)">✦</div><div><div class="svc-title">AI-integrated mobile apps</div><div class="svc-desc">LLM APIs, smart features, personalized experiences in Flutter.</div></div></div>
+          <div class="svc-card"><div class="svc-ico" style="background:rgba(0,229,160,.08)">⚡</div><div><div class="svc-title">Full-stack MVPs</div><div class="svc-desc">Flutter + Node.js/Firebase. Fast, scalable, production-grade.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">awais.chaudhry // senior flutter engineer · lahore, pakistan</div>
+  <div class="f-right">
+    <a href="#home">back to top ↑</a>
+    <span style="color:var(--t3);font-size:11px;font-family:var(--mono)">© 2026 Awais Chaudhry</span>
+  </div>
+</footer>
+</div>
+
+<script>
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+for(let i=0;i<55;i++)pts.push({x:Math.random()*1600,y:Math.random()*1000,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.4+.4});
+function drawP(){
+  ctx.clearRect(0,0,W,H);
+  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,240,255,0.35)';ctx.fill()});
+  pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<100){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(0,240,255,${.1*(1-d/100)})`;ctx.lineWidth=.4;ctx.stroke()}}));
+  requestAnimationFrame(drawP);
+}
+drawP();
+
+const techs=['Flutter','Dart','Node.js','Firebase','MongoDB','Redis','Socket.io','Riverpod','BLoC','GetX','Mapbox','BLE/LoRa','REST APIs','CI/CD','Dart Frog','LLM APIs','WebSockets','GitHub Actions','OCI Storage','FCM'];
+const ts=document.getElementById('tscroll');
+[...techs,...techs].forEach(t=>{const c=document.createElement('div');c.className='tech-chip';c.innerHTML=`<div class="tech-chip-dot"></div>${t}`;ts.appendChild(c)});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.skill-fill').forEach(b=>{setTimeout(()=>{b.style.width=b.dataset.w+'%'},120)});
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
